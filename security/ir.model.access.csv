@@ -1,2 +1,2 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_purchase_procureflow_purchase_procureflow,purchase_procureflow.purchase_procureflow,model_purchase_procureflow_purchase_procureflow,base.group_user,1,1,1,1
+access_purchase_procureflow,purchase_procureflow.purchase_request,model_purchase_procureflow_purchase_procureflow,base.group_user,1,1,1,1

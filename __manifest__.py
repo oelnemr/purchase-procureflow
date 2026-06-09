@@ -21,9 +21,15 @@
         # 'security/ir.model.access.csv',
         "views/views.xml",
         "views/templates.xml",
+        "views/procurement_request_views.xml",
+        "views/purchase_order_views.xml",
     ],
     # only loaded in demonstration mode
     "demo": [
         "demo/demo.xml",
     ],
+    "installable": True,
+    "application": True,
+    "auto_install": False,
+    "license": "LGPL-3",
 }

@@ -1,0 +1,19 @@
+# -*- coding: utf-8 -*-
+from odoo import models, fields
+
+
+class ProcurementRequestLine(models.Model):
+    _name = "procurement.request.line"
+    _description = "Procurement Request Line Item"
+
+    request_id = fields.Many2one(
+        "procurement.request",
+        string="Request Reference",
+        ondelete="cascade",
+        required=True,
+    )
+
+    # Item details
+    product_name = fields.Char(string="Product Name", required=True)
+    quantity = fields.Integer(string="Quantity", default=1, required=True)
+    reason = fields.Text(string="Reason for Request")
