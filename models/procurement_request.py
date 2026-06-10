@@ -18,11 +18,12 @@ class ProcurementRequest(models.Model):
         string="Employee",
         required=True,
         default=lambda self: self.env.user,
+        readonly=True,
     )
     status = fields.Selection(
         [
             ("draft", "Draft"),
-            ("waiting_approval", "Waiting Approval"),
+            ("to_approve", "To Approve"),
             ("approved", "Approved"),
             ("rejected", "Rejected"),
         ],

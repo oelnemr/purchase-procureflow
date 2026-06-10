@@ -1,0 +1,26 @@
+<odoo>
+    <!-- Main Menu (Top Level) [root] -->
+    <menuitem id="menu_purchase_request"
+        name="Purchase ProcureFlow"
+        sequence="1" />
+
+
+    <record id="action_requests" model="ir.actions.act_window">
+        <field name="name">My Requests</field>
+        <field name="res_model">procurement.request</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create your first Request
+            </p>
+        </field>
+    </record>
+
+
+    <menuitem id="menu_requests"
+        name="My Requests"
+        parent="menu_purchase_request"
+        action="action_requests"
+        sequence="10" />
+
+</odoo>

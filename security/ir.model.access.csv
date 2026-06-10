@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_purchase_procureflow,purchase_procureflow.purchase_request,model_purchase_procureflow_purchase_procureflow,base.group_user,1,1,1,1
+access_procurement_request,procurement.request,model_procurement_request,,1,1,1,1
+access_procurement_request_line,procurement.request.line,model_procurement_request_line,,1,1,1,1
