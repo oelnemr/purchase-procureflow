@@ -24,16 +24,19 @@
             <form>
                 <header>
                     <field name="status" widget="statusbar" />
-                    <button name="action_submit" type="object" string="Submit" class="btn-primary" />
+                    <button name="action_submit" type="object" string="Submit Request"
+                        class="btn-primary" invisible="status not in ['draft']" />
 
-                    <button name="action_approve" type="object" string="Approve" class="btn-success" />
+                    <button name="action_approve" type="object" string="Approve"
+                        class="btn-success" />
 
-                    <button name="action_reject" type="object" string="Reject" class="btn-danger" />
+                    <button name="action_reject" type="object" string="Reject"
+                        class="btn-danger" />
 
                     <button name="action_reset_to_draft" type="object" string="Reset To Draft"
                         class="btn-secondary" />
                 </header>
-                <sheet>
+                <sheet edit="status == 'draft'">
                     <div class="oe_title">
                         <label for="name" class="oe_edit_only" />
                         <h1>
@@ -51,15 +54,15 @@
 
                         <group string="Request Info">
                             <field name="request_date" />
-                            <field name="required_date" />
-                            <field name="procurement_reason" />
+                            <field name="required_date" readonly="status != 'draft'" />
+                            <field name="procurement_reason" readonly="status != 'draft'" />
                             <field name="total_amount" />
                             <field name="status" readonly="True" />
                         </group>
 
                         <notebook>
                             <page string="Items">
-                                <field name="line_ids">
+                                <field name="line_ids" readonly="status != 'draft'">
                                     <tree string="Lines" editable="bottom">
                                         <field name="product_name" string="Product / Item" />
                                         <field name="quantity" string="Quantity" />
