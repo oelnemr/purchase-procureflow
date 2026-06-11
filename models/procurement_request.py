@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError, AccessError, UserError
 
 
 class ProcurementRequest(models.Model):
@@ -75,6 +76,12 @@ class ProcurementRequest(models.Model):
     line_ids = fields.One2many(
         "procurement.request.line", "request_id", string="Requested Items"
     )
+
+    @api.constrains("line_ids")
+    def _check_lines(self):
+        for rec in self:
+            if not rec.line_ids:
+                raise UserError("Purchase Request must have at least one line.")
 
     @api.model
     def create(self, vals):

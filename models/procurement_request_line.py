@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError, AccessError, UserError
 
 
 class ProcurementRequestLine(models.Model):
@@ -20,6 +21,12 @@ class ProcurementRequestLine(models.Model):
     subtotal = fields.Float(
         compute="_compute_total_price", string="Total Price", required=True
     )
+
+    @api.constrains("quantity")
+    def _check_excpected_values(self):
+        for record in self:
+            if record.quantity <= 0:
+                raise ValidationError("Requested Quantity Cant Be 0")
 
     @api.depends("quantity", "unit_price")
     def _compute_total_price(self):
