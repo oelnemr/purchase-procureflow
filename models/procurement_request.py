@@ -6,6 +6,7 @@ class ProcurementRequest(models.Model):
     _name = "procurement.request"
     _description = "Procurement Requests"
     _order = "request_date desc"
+    _inherit = ["mail.thread", "mail.activity.mixin"]
 
     name = fields.Char(
         default="Request ID",
@@ -99,17 +100,34 @@ class ProcurementRequest(models.Model):
 
     def action_submit(self):
         for record in self:
+            manager = (
+                record.employee_id.parent_id.user_id
+                or record.employee_id.department_id.manager_id.user_id
+            )
+
             if not self.line_ids:
-                raise ValidationError("Please Enter At Least One Item")
+                raise UserError("Please Enter At Least One Item")
+            elif not record.manager_id:
+                raise UserError("No manager found for approval.")
             record.write({"status": "submitted"})
+
+            self.activity_schedule(
+                activity_type_id=self.env.ref("mail.mail_activity_data_todo").id,
+                user_id=manager.id,
+                summary="Procurement Request Approval",
+                note=f"Request {record.name} needs your approval",
+                date_deadline=fields.Date.today(),
+            )
 
     def action_approve(self):
         for record in self:
             record.write({"status": "approved"})
+            self.activity_feedback(["Procurement Request Approval"])
 
     def action_reject(self):
         for record in self:
             record.write({"status": "rejected"})
+            self.activity_unlink(["Procurement Request Approval"])
 
     def action_reset_to_draft(self):
         for record in self:
