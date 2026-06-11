@@ -6,7 +6,7 @@ class ProcurementRequest(models.Model):
     _description = "Procurement Requests"
     _order = "name desc"
 
-    name = fields.Text(
+    name = fields.Char(
         default="Request ID",
         index=True,
         readonly=True,
@@ -35,3 +35,11 @@ class ProcurementRequest(models.Model):
     line_ids = fields.One2many(
         "procurement.request.line", "request_id", string="Requested Items"
     )
+
+    @api.model
+    def create(self, vals):
+
+        if not vals.get("name") or vals.get("name") == "Request ID":
+            vals["name"] = self.env["ir.sequence"].next_by_code("procurement.request")
+
+        return super().create(vals)
