@@ -14,8 +14,10 @@ class ProcurementRequestLine(models.Model):
         required=True,
     )
 
-    # Item details
-    product_name = fields.Char(string="Product Name", required=True)
+    product_name = fields.Many2one(
+        "product.product",
+        string="Product",
+    )
     quantity = fields.Integer(string="Quantity", default=1, required=True)
     unit_price = fields.Float(string="Estimated Unit Price", required=True)
     subtotal = fields.Float(
