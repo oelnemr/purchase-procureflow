@@ -97,6 +97,24 @@ class ProcurementRequest(models.Model):
         for record in self:
             record.total_amount = sum(record.line_ids.mapped("subtotal"))
 
+    def action_submit(self):
+        for record in self:
+            if not self.line_ids:
+                raise ValidationError("Please Enter At Least One Item")
+            record.write({"status": "submitted"})
+
+    def action_approve(self):
+        for record in self:
+            record.write({"status": "approved"})
+
+    def action_reject(self):
+        for record in self:
+            record.write({"status": "rejected"})
+
+    def action_reset_to_draft(self):
+        for record in self:
+            record.write({"status": "draft"})
+
     @api.model
     def create(self, vals):
 
