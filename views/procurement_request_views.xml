@@ -9,7 +9,9 @@
             <tree string="Request">
                 <field name="name" />
                 <field name="employee_id" />
+                <field name="department_id" readonly="1" />
                 <field name="request_date" />
+                <field name="total_amount" />
                 <field name="status" />
             </tree>
         </field>
@@ -43,6 +45,7 @@
                             <field name="request_date" />
                             <field name="required_date" />
                             <field name="procurement_reason" />
+                            <field name="total_amount" />
                             <field name="status" readonly="True" />
                         </group>
 

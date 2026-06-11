@@ -77,11 +77,25 @@ class ProcurementRequest(models.Model):
         "procurement.request.line", "request_id", string="Requested Items"
     )
 
-    @api.constrains("line_ids")
+    total_amount = fields.Float(
+        string="Total Amount", compute="_compute_total_amount", store=True
+    )
+
+    @api.constrains("line_ids", "required_date")
     def _check_lines(self):
-        for rec in self:
-            if not rec.line_ids:
+        today = fields.Date.today()
+        for record in self:
+            if not record.line_ids:
                 raise UserError("Purchase Request must have at least one line.")
+            elif record.required_date < today:
+                raise ValidationError(
+                    "Required Date Can't be before Request Create Date"
+                )
+
+    @api.depends("line_ids.subtotal")
+    def _compute_total_amount(self):
+        for record in self:
+            record.total_amount = sum(record.line_ids.mapped("subtotal"))
 
     @api.model
     def create(self, vals):
