@@ -8,7 +8,8 @@
         <field name="arch" type="xml">
             <tree string="Request">
                 <field name="name" />
-                <field name="employee_name" />
+                <field name="employee_id" />
+                <field name="request_date" />
                 <field name="status" />
             </tree>
         </field>
@@ -33,15 +34,26 @@
                     <group>
 
                         <group string="Employee Info">
-                            <field name="employee_name" />
+                            <field name="employee_id" />
+                            <field name="manager_id" readonly="1" />
+                            <field name="department_id" readonly="1" />
                         </group>
+
+                        <group string="Request Info">
+                            <field name="request_date" />
+                            <field name="required_date" />
+                            <field name="procurement_reason" />
+                            <field name="status" readonly="True" />
+                        </group>
+
                         <notebook>
-                            <page string="Requested Items">
+                            <page string="Items">
                                 <field name="line_ids">
                                     <tree string="Lines" editable="bottom">
                                         <field name="product_name" string="Product / Item" />
                                         <field name="quantity" string="Quantity" />
-                                        <field name="reason" string="Reason for Request" />
+                                        <field name="unit_price" />
+                                        <field name="subtotal" />
                                     </tree>
                                 </field>
                             </page>

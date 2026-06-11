@@ -4,7 +4,7 @@ from odoo import models, fields, api
 class ProcurementRequest(models.Model):
     _name = "procurement.request"
     _description = "Procurement Requests"
-    _order = "name desc"
+    _order = "request_date desc"
 
     name = fields.Char(
         default="Request ID",
@@ -13,19 +13,59 @@ class ProcurementRequest(models.Model):
         required=True,
         string="Request Referance",
     )
-    employee_name = fields.Many2one(
-        "res.users",
-        string="Employee",
+
+    employee_id = fields.Many2one(
+        "hr.employee",
+        string="Requested By",
+        default=lambda self: self.env.user.employee_id,
+        readonly=True,
         required=True,
-        default=lambda self: self.env.user,
+    )
+
+    department_id = fields.Many2one(
+        "hr.department",
+        string="Department",
+        related="employee_id.department_id",
+        store=True,
         readonly=True,
     )
+
+    manager_id = fields.Many2one(
+        "hr.employee",
+        string="Manager",
+        related="employee_id.parent_id",
+        store=True,
+        readonly=True,
+    )
+
+    request_date = fields.Date(
+        string="Request Date",
+        default=lambda self: fields.Date.context_today(self),
+        readonly=True,
+    )
+
+    required_date = fields.Date(
+        required=True,
+        string="Required Date",
+    )
+
+    procurement_reason = fields.Selection(
+        [
+            ("inventory_replenishment", "Inventory Replenishment"),
+            ("office_supply", "Office Supply Refill"),
+            ("equipment_replacement", "Equipment Failure / Replacement"),
+            ("new_hire", "New Hire Onboarding"),
+        ],
+        string="Reason for Request",
+        required=True,
+    )
+
     status = fields.Selection(
         [
             ("draft", "Draft"),
-            ("to_approve", "To Approve"),
-            ("approved", "Approved"),
-            ("rejected", "Rejected"),
+            ("submitted", "Submitted"),
+            ("approved", "Manager Approved"),
+            ("rejected", "Manager Rejected"),
         ],
         string="Status",
         default="draft",
