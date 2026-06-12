@@ -19,6 +19,7 @@
     # always loaded
     "data": [
         "security/ir.model.access.csv",
+        "security/groups.xml",
         "data/ir_sequence.xml",
         "views/menu.xml",
         "views/procurement_request_views.xml",

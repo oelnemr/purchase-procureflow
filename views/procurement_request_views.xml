@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-
     <record id="view_procurement_request_tree" model="ir.ui.view">
         <field name="name">view_procurement_request_tree</field>
         <field name="model">procurement.request</field>
@@ -23,20 +22,28 @@
         <field name="arch" type="xml">
             <form>
                 <header>
+                    <field name="requester_user_id" invisible="1" />
+                    <field name="approver_user_id" invisible="1" />
+
                     <field name="status" widget="statusbar" />
                     <button name="action_submit" type="object" string="Submit Request"
-                        class="btn-primary" invisible="status not in ['draft']" />
+                        class="btn-primary"
+                        invisible="status != 'draft' or requester_user_id != uid" />
 
-                    <button name="action_approve" type="object" string="Approve"
-                        class="btn-success" />
+                    <button name="action_approve" type="object" string="Approve" class="btn-success"
+                        invisible="status != 'submitted' or approver_user_id != uid"
+                    />
 
-                    <button name="action_reject" type="object" string="Reject"
-                        class="btn-danger" />
+                    <button name="action_reject" type="object" string=" Reject" class=" btn-danger"
+                        invisible="status != 'submitted' or approver_user_id != uid"
+                    />
 
                     <button name="action_reset_to_draft" type="object" string="Reset To Draft"
-                        class="btn-secondary" />
+                        invisible="status != 'submitted' or requester_user_id != uid"
+                    />
                 </header>
-                <sheet edit="status == 'draft'">
+                <sheet edit="
+                    status== 'draft'">
                     <div class="oe_title">
                         <label for="name" class="oe_edit_only" />
                         <h1>
@@ -74,6 +81,11 @@
                         </notebook>
                     </group>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" />
+                    <field name="activity_ids" />
+                    <field name="message_ids" />
+                </div>
             </form>
         </field>
     </record>

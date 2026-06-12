@@ -8,6 +8,7 @@ class ProcurementRequest(models.Model):
     _order = "request_date desc"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
+    # Request Referance Placeholder Used to generate the sequence
     name = fields.Char(
         default="Request ID",
         index=True,
@@ -16,12 +17,22 @@ class ProcurementRequest(models.Model):
         string="Request Referance",
     )
 
+    # User/Employee User Who Created The Request
     employee_id = fields.Many2one(
         "hr.employee",
         string="Requested By",
         default=lambda self: self.env.user.employee_id,
         readonly=True,
         required=True,
+    )
+
+    # Manager Of The User Who Created The Request
+    manager_id = fields.Many2one(
+        "hr.employee",
+        string="Manager",
+        related="employee_id.parent_id",
+        store=True,
+        readonly=True,
     )
 
     department_id = fields.Many2one(
@@ -32,10 +43,17 @@ class ProcurementRequest(models.Model):
         readonly=True,
     )
 
-    manager_id = fields.Many2one(
-        "hr.employee",
-        string="Manager",
-        related="employee_id.parent_id",
+    requester_user_id = fields.Many2one(
+        "res.users",
+        related="employee_id.user_id",
+        store=True,
+        readonly=True,
+    )
+
+    # User who must approve the request
+    approver_user_id = fields.Many2one(
+        "res.users",
+        related="manager_id.user_id",
         store=True,
         readonly=True,
     )
@@ -72,6 +90,7 @@ class ProcurementRequest(models.Model):
         string="Status",
         default="draft",
         required=True,
+        tracking=True,
     )
 
     line_ids = fields.One2many(
@@ -105,10 +124,16 @@ class ProcurementRequest(models.Model):
                 or record.employee_id.department_id.manager_id.user_id
             )
 
-            if not self.line_ids:
+            if record.employee_id.user_id != self.env.user:
+                raise UserError("Only the requester can submit this request.")
+
+            # Prevent empty requests
+            if not record.line_ids:
                 raise UserError("Please Enter At Least One Item")
+            # Every request must have an approver
             elif not record.manager_id:
                 raise UserError("No manager found for approval.")
+
             record.write({"status": "submitted"})
 
             self.activity_schedule(
@@ -121,16 +146,22 @@ class ProcurementRequest(models.Model):
 
     def action_approve(self):
         for record in self:
+            if record.manager_id.user_id != self.env.user:
+                raise UserError("Only the assigned manager can approve.")
             record.write({"status": "approved"})
-            self.activity_feedback(["Procurement Request Approval"])
 
     def action_reject(self):
         for record in self:
+            if record.manager_id.user_id != self.env.user:
+                raise UserError("Only the assigned manager can approve.")
             record.write({"status": "rejected"})
-            self.activity_unlink(["Procurement Request Approval"])
 
     def action_reset_to_draft(self):
         for record in self:
+            if record.employee_id.user_id != self.env.user:
+                raise UserError("Only the requester can reset this request.")
+            if record.status != "submitted":
+                raise UserError("Only submitted requests can be reset.")
             record.write({"status": "draft"})
 
     @api.model

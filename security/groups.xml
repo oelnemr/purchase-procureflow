@@ -1,0 +1,9 @@
+<odoo>
+    <record id="group_procurement_employee" model="res.groups">
+        <field name="name">Procurement Employee</field>
+    </record>
+
+    <record id="group_procurement_manager" model="res.groups">
+        <field name="name">Procurement Manager</field>
+    </record>
+</odoo>
