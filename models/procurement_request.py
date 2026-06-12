@@ -26,7 +26,7 @@ class ProcurementRequest(models.Model):
         required=True,
     )
 
-    # Manager Of The User Who Created The Request
+    # Manager Of The User Who Created The Request [Approver]
     manager_id = fields.Many2one(
         "hr.employee",
         string="Manager",
@@ -42,7 +42,7 @@ class ProcurementRequest(models.Model):
         store=True,
         readonly=True,
     )
-
+    # used to show/hide button based on requester/approver [XML]
     requester_user_id = fields.Many2one(
         "res.users",
         related="employee_id.user_id",
@@ -50,7 +50,7 @@ class ProcurementRequest(models.Model):
         readonly=True,
     )
 
-    # User who must approve the request
+    # used to show/hide button based on requester/approver [XML]
     approver_user_id = fields.Many2one(
         "res.users",
         related="manager_id.user_id",
@@ -66,7 +66,7 @@ class ProcurementRequest(models.Model):
 
     required_date = fields.Date(
         required=True,
-        string="Required Date",
+        string="Need-By Date",
     )
 
     procurement_reason = fields.Selection(
@@ -76,14 +76,14 @@ class ProcurementRequest(models.Model):
             ("equipment_replacement", "Equipment Failure / Replacement"),
             ("new_hire", "New Hire Onboarding"),
         ],
-        string="Reason for Request",
+        string="Justification",
         required=True,
     )
 
     status = fields.Selection(
         [
             ("draft", "Draft"),
-            ("submitted", "Submitted"),
+            ("`submitted`", "Submitted"),
             ("approved", "Manager Approved"),
             ("rejected", "Manager Rejected"),
         ],
