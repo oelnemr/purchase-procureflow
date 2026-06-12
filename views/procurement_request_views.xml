@@ -11,7 +11,10 @@
                 <field name="department_id" readonly="1" />
                 <field name="request_date" />
                 <field name="total_amount" />
-                <field name="status" />
+                <field name="status" widget="badge"
+                    decoration-success="status == 'approved'"
+                    decoration-danger="status == 'rejected'"
+                />
             </tree>
         </field>
     </record>
@@ -73,7 +76,11 @@
                             <field name="required_date" readonly="status != 'draft'" />
                             <field name="procurement_reason" readonly="status != 'draft'" />
                             <field name="total_amount" />
-                            <field name="status" readonly="True" />
+                            <field name="status" readonly="True"
+                                widget="badge"
+                                decoration-success="status == 'approved'"
+                                decoration-danger="status == 'rejected'"
+                            />
                             <field
                                 name="rejection_reason"
                                 readonly="True"
