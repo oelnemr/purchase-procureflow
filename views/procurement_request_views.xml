@@ -88,13 +88,14 @@
                         </group>
 
                         <notebook>
-                            <page string="Items">
+                            <page string="Item Overview">
                                 <field name="line_ids" readonly="status != 'draft'">
                                     <tree string="Lines" editable="bottom">
-                                        <field name="product_name" string="Product / Item" />
-                                        <field name="quantity" string="Quantity" />
-                                        <field name="unit_price" />
-                                        <field name="subtotal" />
+                                        <field name="product_name" string="Product / Item"
+                                            width="60%" />
+                                        <field name="quantity" string="Quantity" width="10%" />
+                                        <field name="unit_price" width="15%" />
+                                        <field name="subtotal" width="10%" />
                                     </tree>
                                 </field>
                             </page>

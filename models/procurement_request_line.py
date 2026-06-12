@@ -19,7 +19,7 @@ class ProcurementRequestLine(models.Model):
         string="Product",
     )
     quantity = fields.Integer(string="Quantity", default=1, required=True)
-    unit_price = fields.Float(string="Estimated Unit Price", required=True)
+    unit_price = fields.Float(string="Estimated Price / Unit Price", required=True)
     subtotal = fields.Float(
         compute="_compute_total_price", string="Total Price", required=True
     )

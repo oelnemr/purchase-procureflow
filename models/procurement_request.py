@@ -75,6 +75,7 @@ class ProcurementRequest(models.Model):
             ("office_supply", "Office Supply Refill"),
             ("equipment_replacement", "Equipment Failure / Replacement"),
             ("new_hire", "New Hire Onboarding"),
+            ("project_expense", "Project Expense"),
         ],
         string="Justification",
         required=True,
