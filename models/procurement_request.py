@@ -20,7 +20,7 @@ class ProcurementRequest(models.Model):
     # User/Employee User Who Created The Request
     employee_id = fields.Many2one(
         "hr.employee",
-        string="Requested By",
+        string="Created By",
         default=lambda self: self.env.user.employee_id,
         readonly=True,
         required=True,
@@ -59,7 +59,7 @@ class ProcurementRequest(models.Model):
     )
 
     request_date = fields.Date(
-        string="Request Date",
+        string="Created At",
         default=lambda self: fields.Date.context_today(self),
         readonly=True,
     )
