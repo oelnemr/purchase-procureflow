@@ -1,0 +1,34 @@
+<odoo>
+    <record id="view_procurement_reject_wizard_form" model="ir.ui.view">
+        <field name="name">procurement.reject.wizard.form</field>
+        <field name="model">procurement.reject.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="wizard_rejection_reason" />
+                </group>
+
+                <footer>
+                    <button name="action_confirm_reject"
+                        string="Reject"
+                        type="object"
+                        class="btn-danger" />
+
+                    <button string="Cancel"
+                        special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_procurement_reject_wizard"
+        model="ir.actions.act_window">
+
+        <field name="name">Reject Request</field>
+        <field name="res_model">procurement.reject.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+
+    </record>
+
+</odoo>

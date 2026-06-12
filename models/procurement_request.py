@@ -93,6 +93,11 @@ class ProcurementRequest(models.Model):
         tracking=True,
     )
 
+    rejection_reason = fields.Text(
+        string="Rejection Reason",
+        readonly=True,
+    )
+
     line_ids = fields.One2many(
         "procurement.request.line", "request_id", string="Requested Items"
     )

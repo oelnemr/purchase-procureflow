@@ -21,6 +21,7 @@
         "security/ir.model.access.csv",
         "security/groups.xml",
         "data/ir_sequence.xml",
+        "wizard/procurement_reject_wizard_views.xml",
         "views/menu.xml",
         "views/procurement_request_views.xml",
         # "views/purchase_order_views.xml",
