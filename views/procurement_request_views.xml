@@ -42,6 +42,7 @@
                         invisible="status != 'submitted' or approver_user_id != uid"
                     /> -->
 
+                    <!-- /wizard/procurement_reject_wizard_views.xml -->
                     <button name="%(purchase_procureflow.action_procurement_reject_wizard)d"
                         type="action"
                         string="Reject Request"

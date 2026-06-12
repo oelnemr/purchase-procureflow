@@ -1,4 +1,5 @@
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError, AccessError, UserError
 
 
 class ProcurementRejectReasonWizard(models.TransientModel):
@@ -14,6 +15,8 @@ class ProcurementRejectReasonWizard(models.TransientModel):
 
     def action_confirm_reject(self):
         self.ensure_one()
+        if self.request_id.manager_id.user_id != self.env.user:
+            raise UserError("Only the assigned manager can reject.")
         self.request_id.write(
             {
                 "status": "rejected",

@@ -159,7 +159,7 @@ class ProcurementRequest(models.Model):
     def action_reject(self):
         for record in self:
             if record.manager_id.user_id != self.env.user:
-                raise UserError("Only the assigned manager can approve.")
+                raise UserError("Only the assigned manager can reject.")
             record.write({"status": "rejected"})
 
     def action_reset_to_draft(self):

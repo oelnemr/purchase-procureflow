@@ -9,6 +9,7 @@
                 </group>
 
                 <footer>
+                    <!-- trigger action_confirm_reject() in procurement_reject_wizard.py -->
                     <button name="action_confirm_reject"
                         string="Reject"
                         type="object"
