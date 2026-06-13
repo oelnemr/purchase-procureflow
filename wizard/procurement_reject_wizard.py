@@ -23,4 +23,7 @@ class ProcurementRejectReasonWizard(models.TransientModel):
                 "rejection_reason": self.wizard_rejection_reason,
             }
         )
+        procurement = self.env["procurement.request"].browse(int(self.request_id))
+        procurement.mark_activity_as_done()
+
         return {"type": "ir.actions.act_window_close"}

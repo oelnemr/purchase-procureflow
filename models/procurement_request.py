@@ -123,6 +123,30 @@ class ProcurementRequest(models.Model):
         for record in self:
             record.total_amount = sum(record.line_ids.mapped("subtotal"))
 
+    def mark_activity_as_done(self):
+
+        for record in self:
+            todo_activity = self.env["mail.activity"].search(
+                [
+                    ("res_model", "=", record._name),
+                    ("res_id", "=", record.id),
+                    (
+                        "activity_type_id",
+                        "=",
+                        self.env.ref("mail.mail_activity_data_todo").id,
+                    ),
+                    (
+                        "summary",
+                        "=",
+                        "Procurement Request Approval",
+                    ),
+                ],
+                limit=1,
+            )
+
+            if todo_activity:
+                todo_activity.action_done()
+
     def action_submit(self):
         for record in self:
             manager = (
@@ -155,12 +179,14 @@ class ProcurementRequest(models.Model):
             if record.manager_id.user_id != self.env.user:
                 raise UserError("Only the assigned manager can approve.")
             record.write({"status": "approved"})
+            self.mark_activity_as_done()
 
-    def action_reject(self):
-        for record in self:
-            if record.manager_id.user_id != self.env.user:
-                raise UserError("Only the assigned manager can reject.")
-            record.write({"status": "rejected"})
+    # ======== reject login moved to wizard/procurement_reject_wizard.py ==========
+    # def action_reject(self):
+    #     for record in self:
+    #         if record.manager_id.user_id != self.env.user:
+    #             raise UserError("Only the assigned manager can reject.")
+    #         record.write({"status": "rejected"})
 
     def action_reset_to_draft(self):
         for record in self:
