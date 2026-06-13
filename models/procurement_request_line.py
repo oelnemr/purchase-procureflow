@@ -27,7 +27,7 @@ class ProcurementRequestLine(models.Model):
     @api.constrains("quantity", "unit_price")
     def _check_excpected_values(self):
         for record in self:
-            if record.quantity or record.unit_price <= 0:
+            if record.quantity <= 0 or record.unit_price <= 0:
                 raise ValidationError(
                     "Requested Quantity or Estimated Price / Unit Price Cant = 0"
                 )

@@ -78,6 +78,7 @@
                         </group>
 
                         <group string="Request Info">
+                            <field name="partner_id" />
                             <field name="request_date" />
                             <field name="required_date" readonly="status != 'draft'" />
                             <field name="procurement_reason" readonly="status != 'draft'" />

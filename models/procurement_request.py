@@ -58,6 +58,13 @@ class ProcurementRequest(models.Model):
         readonly=True,
     )
 
+    partner_id = fields.Many2one(
+        "res.partner",
+        string="Vendor",
+        domain="[('supplier_rank', '>', 0)]",
+        required=True,
+    )
+
     request_date = fields.Date(
         string="Created At",
         default=lambda self: fields.Date.context_today(self),
@@ -106,6 +113,8 @@ class ProcurementRequest(models.Model):
     total_amount = fields.Float(
         string="Total Amount", compute="_compute_total_amount", store=True
     )
+
+    rfq_id = fields.Many2one("purchase.order", string="RFQ", copy=False)
 
     @api.constrains("line_ids", "required_date")
     def _check_lines(self):
@@ -177,11 +186,47 @@ class ProcurementRequest(models.Model):
     def action_approve(self):
         for record in self:
             if record.manager_id.user_id != self.env.user:
-                raise UserError("Only the assigned manager can approve.")
-            record.write({"status": "approved"})
-            self.mark_activity_as_done()
+                raise UserError("Only the assigned Manager can approve.")
 
-    # ======== reject login moved to wizard/procurement_reject_wizard.py ==========
+        order_lines = []
+        for line in record.line_ids:
+            order_lines.append(
+                (
+                    0,
+                    0,
+                    {
+                        "product_id": line.product_name.id,
+                        "name": line.product_name.display_name,
+                        "product_qty": line.quantity,
+                        "price_unit": line.unit_price,
+                        "product_uom": line.product_name.uom_id.id,
+                        "date_planned": fields.Date.today(),
+                    },
+                )
+            )
+
+        rfq = self.env["purchase.order"].create(
+            {
+                "partner_id": record.partner_id.id,
+                "origin": record.name,
+                "order_line": order_lines,
+                "state": "draft",
+            }
+        )
+
+        record.write(
+            {
+                "status": "approved",
+                "rfq_id": rfq.id,
+            }
+        )
+
+        record.message_post(
+            body=f"RFQ {rfq.name} created automatically after approval."
+        )
+        self.mark_activity_as_done()
+
+    # ======== reject login function moved to wizard/procurement_reject_wizard.py ==========
     # def action_reject(self):
     #     for record in self:
     #         if record.manager_id.user_id != self.env.user:
