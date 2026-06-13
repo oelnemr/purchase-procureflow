@@ -24,11 +24,13 @@ class ProcurementRequestLine(models.Model):
         compute="_compute_total_price", string="Total Price", required=True
     )
 
-    @api.constrains("quantity")
+    @api.constrains("quantity", "unit_price")
     def _check_excpected_values(self):
         for record in self:
-            if record.quantity <= 0:
-                raise ValidationError("Requested Quantity Cant Be 0")
+            if record.quantity or record.unit_price <= 0:
+                raise ValidationError(
+                    "Requested Quantity or Estimated Price / Unit Price Cant = 0"
+                )
 
     @api.depends("quantity", "unit_price")
     def _compute_total_price(self):
