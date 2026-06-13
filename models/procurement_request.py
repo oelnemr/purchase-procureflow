@@ -84,7 +84,7 @@ class ProcurementRequest(models.Model):
     status = fields.Selection(
         [
             ("draft", "Draft"),
-            ("`submitted`", "Submitted"),
+            ("submitted", "Submitted"),
             ("approved", "Manager Approved"),
             ("rejected", "Manager Rejected"),
         ],

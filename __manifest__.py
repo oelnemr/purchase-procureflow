@@ -20,6 +20,7 @@
     "data": [
         "security/ir.model.access.csv",
         "security/groups.xml",
+        "security/record_rules.xml",
         "data/ir_sequence.xml",
         "wizard/procurement_reject_wizard_views.xml",
         "views/menu.xml",
