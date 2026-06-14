@@ -88,6 +88,17 @@ class ProcurementRequest(models.Model):
         required=True,
     )
 
+    requisition_urgency = fields.Selection(
+        [
+            ("low", "Low"),
+            ("medium", "Medium"),
+            ("high", "High"),
+            ("critical", "Critical"),
+        ],
+        string="Urgency",
+        required=True,
+    )
+
     status = fields.Selection(
         [
             ("draft", "Draft"),

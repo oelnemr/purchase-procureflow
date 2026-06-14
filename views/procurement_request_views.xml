@@ -66,7 +66,7 @@
 
                     <group>
 
-                        <group string="Employee Info">
+                        <group string="Request Info">
                             <field name="employee_id" />
                             <field name="manager_id" readonly="1" />
                             <field name="department_id" readonly="1" />
@@ -75,6 +75,7 @@
                                 decoration-success="status == 'approved'"
                                 decoration-danger="status == 'rejected'"
                             />
+                            <field name="requisition_urgency" />
                         </group>
 
                         <group string="Request Info">
