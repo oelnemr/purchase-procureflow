@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Notify manager about a purchase request requiring review -->
+        <record id="mail_notify_manager" model="mail.template">
+            <field name="name">Purchase Request: Notify Manager</field>
+            <field name="model_id" ref="purchase_procureflow.model_procurement_request" />
+
+            <field name="email_from">{{ object.employee_id.work_email or user.email }}</field>
+
+            <!-- Replace with your actual manager field -->
+            <field name="email_to">{{ object.requester_user_id.email }}</field>
+
+            <field name="subject">Purchase Request ${object.name} Requires Review</field>
+
+            <field name="body_html" type="html">
+                <div style="margin:0; padding:0;">
+                    <p style="font-size:13px;"> Dear <t t-out="object.requester_user_id.name" />, <br /><br />
+                        A purchase request (<strong>
+                            <t t-out="object.name" />
+                        </strong>) has been
+                        submitted and is awaiting your review. <br /><br /> Please review the
+                        request and take the appropriate action. <br /><br /> Thank you. </p>
+                </div>
+            </field>
+        </record>
+
+    </data>
+</odoo>

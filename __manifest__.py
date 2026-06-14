@@ -22,6 +22,7 @@
         "security/groups.xml",
         "security/record_rules.xml",
         "data/ir_sequence.xml",
+        "data/mail_template_data.xml",
         "wizard/procurement_reject_wizard_views.xml",
         "views/menu.xml",
         "views/procurement_request_views.xml",
