@@ -3,7 +3,7 @@
     <data noupdate="0">
 
         <!-- Notify manager about a purchase request requiring review -->
-        <record id="mail_notify_manager" model="mail.template">
+        <record id="template_mail_notify_manager" model="mail.template">
             <field name="name">Purchase Request: Notify Manager</field>
             <field name="model_id" ref="purchase_procureflow.model_procurement_request" />
 
@@ -11,9 +11,7 @@
 
             <!-- Replace with your actual manager field -->
             <field name="email_to">{{ object.requester_user_id.email }}</field>
-
-            <field name="subject">Purchase Request ${object.name} Requires Review</field>
-
+            <field name="subject">Purchase Request {{object.name}} Requires Review</field>
             <field name="body_html" type="html">
                 <div style="margin:0; padding:0;">
                     <p style="font-size:13px;"> Dear <t t-out="object.requester_user_id.name" />, <br /><br />

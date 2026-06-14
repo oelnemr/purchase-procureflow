@@ -143,6 +143,11 @@ class ProcurementRequest(models.Model):
         for record in self:
             record.total_amount = sum(record.line_ids.mapped("subtotal"))
 
+    def action_send_email(self):
+        template_xml_id = "purchase_procureflow.template_mail_notify_manager"
+        template = self.env.ref(template_xml_id, raise_if_not_found=False)
+        template.send_mail(self.id, force_send=True)
+
     def mark_activity_as_done(self):
 
         for record in self:
@@ -193,6 +198,8 @@ class ProcurementRequest(models.Model):
                 note=f"Request {record.name} needs your approval",
                 date_deadline=fields.Date.today(),
             )
+            if record["requisition_urgency"] == "critical":
+                record.action_send_email()
 
     def action_approve(self):
         for record in self:
