@@ -25,7 +25,6 @@
         "wizard/procurement_reject_wizard_views.xml",
         "views/menu.xml",
         "views/procurement_request_views.xml",
-        # "views/purchase_order_views.xml",
     ],
     # only loaded in demonstration mode
     "demo": [
