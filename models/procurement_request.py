@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError, AccessError, UserError
 class ProcurementRequest(models.Model):
     _name = "procurement.request"
     _description = "Procurement Requests"
-    _order = "request_date desc"
+    _order = "name desc"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
     # Request Referance Placeholder Used to generate the sequence
