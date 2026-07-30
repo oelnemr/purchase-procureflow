@@ -1,8 +1,10 @@
 <odoo>
+
     <!-- Main Menu (Top Level) [root] -->
     <menuitem id="menu_purchase_request"
         name="Purchase ProcureFlow"
-        sequence="1" />
+        sequence="1"
+        web_icon="purchase_procureflow,static/description/icon.png" />
 
 
     <record id="action_requests" model="ir.actions.act_window">
@@ -21,7 +23,7 @@
         name="My Requests"
         parent="menu_purchase_request"
         action="action_requests"
-        sequence="10" />
-
+        sequence="10"
+    />
 
 </odoo>
