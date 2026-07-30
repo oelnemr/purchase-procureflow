@@ -16,7 +16,7 @@
                 <field name="status" widget="badge"
                     decoration-success="status == 'approved'"
                     decoration-danger="status == 'rejected'"
-                    decoration-warning="status == 'submitted'"
+                    decoration-info="status == 'submitted'"
                 />
             </tree>
         </field>
@@ -77,7 +77,7 @@
                                 widget="badge"
                                 decoration-success="status == 'approved'"
                                 decoration-danger="status == 'rejected'"
-                                decoration-warning="status == 'submitted'"
+                                decoration-info="status == 'submitted'"
                             />
                             <field name="requisition_urgency" readonly="status != 'draft'" />
                             <field name="rfq_id" invisible="status not in ['approved']" />
