@@ -80,6 +80,7 @@
                                 decoration-warning="status == 'submitted'"
                             />
                             <field name="requisition_urgency" readonly="status != 'draft'" />
+                            <field name="rfq_id" invisible="status not in ['approved']" />
                         </group>
 
                         <group string="Request Info">
@@ -91,7 +92,8 @@
                             <field
                                 name="rejection_reason"
                                 readonly="True"
-                                invisible="status not in ['rejected']" />
+                                invisible="status not in ['rejected']"
+                                class="fw-bold" />
                         </group>
 
                         <notebook>

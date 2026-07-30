@@ -125,7 +125,7 @@ class ProcurementRequest(models.Model):
         string="Total Amount", compute="_compute_total_amount", store=True
     )
 
-    rfq_id = fields.Many2one("purchase.order", string="RFQ", copy=False)
+    rfq_id = fields.Many2one("purchase.order", string="RFQ", copy=False, readonly=True)
 
     @api.constrains("line_ids", "required_date")
     def _check_lines(self):
