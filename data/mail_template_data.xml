@@ -14,12 +14,16 @@
             <field name="subject">Purchase Request {{object.name}} Requires Review</field>
             <field name="body_html" type="html">
                 <div style="margin:0; padding:0;">
-                    <p style="font-size:13px;"> Dear <t t-out="object.requester_user_id.name" />, <br /><br />
-                        A purchase request (<strong>
+                    <p style="font-size:13px;"> Dear <strong>
+                            <t t-out="object.approver_user_id.name" />
+                        </strong>
+                        , <br /><br /> A critical purchase request (<strong>
                             <t t-out="object.name" />
-                        </strong>) has been
-                        submitted and is awaiting your review. <br /><br /> Please review the
-                        request and take the appropriate action. <br /><br /> Thank you. </p>
+                        </strong>) by <strong>
+                            <t t-out="object.requester_user_id.name" />
+                        </strong>
+                        has been submitted and is awaiting your review. <br /><br /> Please review
+                        the request and take the appropriate action. <br /><br /> Thank you. </p>
                 </div>
             </field>
         </record>
