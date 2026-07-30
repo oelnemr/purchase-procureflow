@@ -6,10 +6,12 @@
         <field name="model">procurement.request</field>
         <field name="arch" type="xml">
             <tree string="Request">
-                <field name="name" />
+                <field name="name" class="fw-bold" />
                 <field name="employee_id" widget="many2one_avatar" />
                 <field name="department_id" readonly="1" />
                 <field name="request_date" />
+                <field name="requisition_urgency" widget="badge"
+                    decoration-danger="requisition_urgency == 'critical'" />
                 <field name="total_amount" />
                 <field name="status" widget="badge"
                     decoration-success="status == 'approved'"
