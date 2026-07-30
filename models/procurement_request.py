@@ -60,7 +60,7 @@ class ProcurementRequest(models.Model):
 
     partner_id = fields.Many2one(
         "res.partner",
-        string="Vendor",
+        string="Suggested Vendor",
         domain="[('supplier_rank', '>', 0)]",
         required=True,
     )

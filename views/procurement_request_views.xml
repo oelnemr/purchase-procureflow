@@ -12,7 +12,7 @@
                 <field name="request_date" />
                 <field name="requisition_urgency" widget="badge"
                     decoration-danger="requisition_urgency == 'critical'" />
-                <field name="total_amount" />
+                <field name="total_amount" class="fw-bold" />
                 <field name="status" widget="badge"
                     decoration-success="status == 'approved'"
                     decoration-danger="status == 'rejected'"
