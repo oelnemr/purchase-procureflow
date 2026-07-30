@@ -79,12 +79,12 @@
                                 decoration-danger="status == 'rejected'"
                                 decoration-warning="status == 'submitted'"
                             />
-                            <field name="requisition_urgency" />
+                            <field name="requisition_urgency" readonly="status != 'draft'" />
                         </group>
 
                         <group string="Request Info">
-                            <field name="partner_id" />
-                            <field name="request_date" />
+                            <field name="partner_id" readonly="status != 'draft'" />
+                            <field name="request_date" readonly="status != 'draft'" />
                             <field name="required_date" readonly="status != 'draft'" />
                             <field name="procurement_reason" readonly="status != 'draft'" />
                             <field name="total_amount" />
