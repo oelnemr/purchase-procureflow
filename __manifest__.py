@@ -25,6 +25,7 @@
         "data/mail_template_data.xml",
         "wizard/procurement_reject_wizard_views.xml",
         "views/menu.xml",
+        "views/purchase_order_view.xml",
         "views/procurement_request_views.xml",
     ],
     # only loaded in demonstration mode

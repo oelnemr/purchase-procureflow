@@ -227,6 +227,7 @@ class ProcurementRequest(models.Model):
                 {
                     "partner_id": record.partner_id.id,
                     "origin": record.name,
+                    "procurement_request_id": record.id,
                     "order_line": order_lines,
                     "state": "draft",
                 }
