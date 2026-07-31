@@ -206,6 +206,18 @@ class ProcurementRequest(models.Model):
             if record.manager_id.user_id != self.env.user:
                 raise UserError("Only the assigned Manager can approve.")
 
+            record.write({"status": "approved"})
+            record.mark_activity_as_done()
+
+    def action_create_rfq(self):
+        for record in self:
+            if record.manager_id.user_id != self.env.user:
+                raise UserError("Only the assigned Manager can create an RFQ.")
+            if record.status != "approved":
+                raise UserError("Only approved requests can create an RFQ.")
+            if record.rfq_id:
+                raise UserError("An RFQ has already been created for this request.")
+
             order_lines = []
             for line in record.line_ids:
                 order_lines.append(
@@ -235,15 +247,13 @@ class ProcurementRequest(models.Model):
 
             record.write(
                 {
-                    "status": "approved",
                     "rfq_id": rfq.id,
                 }
             )
 
             record.message_post(
-                body=f"RFQ {rfq.name} created automatically after approval."
+                body=f"RFQ {rfq.name} created from this approved request."
             )
-            record.mark_activity_as_done()
 
     # ======== reject login function moved to wizard/procurement_reject_wizard.py ==========
     # def action_reject(self):
