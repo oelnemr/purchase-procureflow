@@ -10,7 +10,7 @@
             <field name="email_from">{{ object.employee_id.work_email or user.email }}</field>
 
             <!-- Replace with your actual manager field -->
-            <field name="email_to">{{ object.requester_user_id.email }}</field>
+            <field name="email_to">{{ object.approver_user_id.email }}</field>
             <field name="subject">Purchase Request {{object.name}} Requires Review</field>
             <field name="body_html" type="html">
                 <div style="margin:0; padding:0;">
