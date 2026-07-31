@@ -104,6 +104,7 @@ class ProcurementRequest(models.Model):
             ("draft", "Draft"),
             ("submitted", "Submitted"),
             ("approved", "Manager Approved"),
+            ("rfq_created", "RFQ Created"),
             ("rejected", "Manager Rejected"),
         ],
         string="Status",
@@ -247,6 +248,7 @@ class ProcurementRequest(models.Model):
 
             record.write(
                 {
+                    "status": "rfq_created",
                     "rfq_id": rfq.id,
                 }
             )
