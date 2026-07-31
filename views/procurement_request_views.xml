@@ -70,8 +70,8 @@
                     <group>
 
                         <group string="Request Info">
-                            <field name="employee_id" />
-                            <field name="manager_id" readonly="1" />
+                            <field name="employee_id" widget="many2one_avatar" />
+                            <field name="manager_id" widget="many2one_avatar" readonly="1" />
                             <field name="department_id" readonly="1" />
                             <field name="status" readonly="True"
                                 widget="badge"
