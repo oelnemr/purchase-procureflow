@@ -4,3 +4,4 @@ access_procurement_request_manager,procurement.request.manager,model_procurement
 access_procurement_request_officer,procurement.request.officer,model_procurement_request,purchase_procureflow.group_procurement_officer,1,1,1,1
 access_procurement_request_line,procurement.request.line,model_procurement_request_line,,1,1,1,1
 access_procurement_request_wizard,procurement.request.line.qizard,model_procurement_reject_wizard,,1,1,1,1
+access_hr_employee_procurement_user,hr.employee.procurement.user,hr.model_hr_employee,purchase_procureflow.group_procurement_employee,1,0,0,0
