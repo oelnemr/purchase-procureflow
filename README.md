@@ -15,3 +15,17 @@ Features:
 
 Designed to improve procurement transparency, accountability,
 and operational efficiency.
+
+## Screenshots
+
+### Employee Dashboard
+![Employee Dashboard](static/screenshots/employee-dashboard.png)
+
+### New Request
+![New Request](static/screenshots/new-request.png)
+
+### Manager Dashboard
+![Manager Dashboard](static/screenshots/manager-dashboard.png)
+
+### Approve Request
+![Approve Request](static/screenshots/approve.png)
