@@ -18,11 +18,11 @@ and operational efficiency.
 
 ## Screenshots
 
-### Employee Dashboard
-![Employee Dashboard](static/screenshots/employee-dashboard.png)
-
 ### New Request
 ![New Request](static/screenshots/new-request.png)
+
+### Employee Dashboard
+![Employee Dashboard](static/screenshots/employee-dashboard.png)
 
 ### Manager Dashboard
 ![Manager Dashboard](static/screenshots/manager-dashboard.png)
